@@ -29,3 +29,11 @@ player_frame.head()
 event_frame.head()
 
 event_frame.describe()
+
+seasons = event_frame.Season.unique()
+teams = event_frame.EventTeamID.unique()
+event_types = event_frame.EventType.unique()
+
+counts = event_frame.groupby(['EventTeamID', 'Season', 'EventType']).size()
+
+counts
