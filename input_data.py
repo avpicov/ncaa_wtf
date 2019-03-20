@@ -41,6 +41,7 @@ event_season_group = event_frame.groupby(['EventTeamID', 'Season']).size()
 
 stats_array = np.empty((len(event_type_group.keys().shape[0]), 3 + len(event_types)))
 
+items = []
 for key in event_season_group.keys():
 
     l = []
@@ -48,11 +49,20 @@ for key in event_season_group.keys():
     l.append(key[1])
     for event_type in event_types:
         lookup_key = (key[0], key[1], event_type)
-        if key in event_type_group.index:
-            stat = event_type_group[key]
-            
+        if lookup_key in event_type_group.index:
+            stat = event_type_group[lookup_key]
+
             l.append(stat)
         else:
             l.append(None)
 
+    items.append(l)
     print(l)
+
+stats = pd.DataFrame(items)
+
+stat_columns = ['teamId', 'year']
+for item in event_types.tolist():
+    stat_columns.append(item)
+
+stats.to_csv("stats.csv", index=False)
