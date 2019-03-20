@@ -13,6 +13,8 @@
 - The predictions are sumbmitted as probabilities and the stronger probabilities are punished for being incorrect. 
 - Error scores are calculated using [Log Loss](https://www.kaggle.com/c/mens-machine-learning-competition-2019#evaluation)
 
+## Reference
+- [Log Loss Video](https://www.youtube.com/watch?v=IYzc_2rY9k8)
 
 
 
