@@ -1,5 +1,6 @@
 import glob
 import pandas as pd
+import numpy as np
 
 path = './data/playbyplay/' # use your path
 player_all_files = glob.glob(path + "PlayByPlay*/Players_*.csv")
@@ -34,6 +35,24 @@ seasons = event_frame.Season.unique()
 teams = event_frame.EventTeamID.unique()
 event_types = event_frame.EventType.unique()
 
-counts = event_frame.groupby(['EventTeamID', 'Season', 'EventType']).size()
+event_type_group = event_frame.groupby(['EventTeamID', 'Season', 'EventType']).size()
 
-counts
+event_season_group = event_frame.groupby(['EventTeamID', 'Season']).size()
+
+stats_array = np.empty((len(event_type_group.keys().shape[0]), 3 + len(event_types)))
+
+for key in event_season_group.keys():
+
+    l = []
+    l.append(key[0])
+    l.append(key[1])
+    for event_type in event_types:
+        lookup_key = (key[0], key[1], event_type)
+        if key in event_type_group.index:
+            stat = event_type_group[key]
+            
+            l.append(stat)
+        else:
+            l.append(None)
+
+    print(l)
